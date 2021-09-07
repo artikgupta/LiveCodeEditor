@@ -8,10 +8,29 @@ import "codemirror/mode/javascript/javascript.js";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 
 export default class LiveCodeEditor extends Component {
-  state = {
-    htmlCode: "",
-    cssCode: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      htmlCode: `<center>
+  <img src="https://cutt.ly/JbMvJKT" />
+  <h1>Hello World!</h1>
+</center>`,
+      cssCode: `h1 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+img {
+  width: 200px;
+  height: auto;
+  border-radius: 20px;
+} `,
+    };
+    this.iframeRef = React.createRef();
+  }
+
+  renderHtml() {
+    this.iframeRef.current.src = this.state.htmlCode;
+  }
+
   render() {
     const options = {
       mode: "xml",
@@ -19,23 +38,35 @@ export default class LiveCodeEditor extends Component {
       lineNumbers: true,
     };
     return (
-      <div>
-        <CodeMirror
-          value={this.state.htmlCode}
-          options={{ ...options }}
-          onChange={(editor, value) => {
-            this.setState({ htmlCode: value.value });
-            console.log("uncontrolled", { value });
-          }}
-        />
-        <CodeMirror
-          value={this.state.cssCode}
-          options={{ ...options, mode: "css" }}
-          onChange={(editor, value) => {
-            this.setState({ cssCode: value.value });
-            console.log("uncontrolled", { value });
-          }}
-        />
+      <div className="live-code-editor">
+        <div className="editor-container">
+          <div className="editor">
+            <CodeMirror
+              value={this.state.htmlCode}
+              options={{ ...options }}
+              onChange={(editor, data, value) => {
+                console.log(editor, value);
+                this.setState({ htmlCode: value });
+              }}
+            />
+          </div>
+          <div className="editor">
+            <CodeMirror
+              value={this.state.cssCode}
+              options={{ ...options, mode: "css" }}
+              onChange={(editor, data, value) => {
+                this.setState({ cssCode: value });
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="iframe-container">
+          <iframe
+            ref={this.iframeRef}
+            srcDoc={`${this.state.htmlCode} <style>${this.state.cssCode}</style>`}
+          ></iframe>
+        </div>
       </div>
     );
   }
