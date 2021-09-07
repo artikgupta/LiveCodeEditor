@@ -63,6 +63,7 @@ img {
 
         <div className="iframe-container">
           <iframe
+            title="Live Code Preview"
             ref={this.iframeRef}
             srcDoc={`${this.state.htmlCode} <style>${this.state.cssCode}</style>`}
           ></iframe>
