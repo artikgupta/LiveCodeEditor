@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
-import "codemirror/theme/neat.css";
-import "codemirror/mode/xml/xml.js";
-import "codemirror/mode/javascript/javascript.js";
+import React, { Component } from 'react';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
+import 'codemirror/theme/neat.css';
+import 'codemirror/mode/xml/xml.js';
+import 'codemirror/mode/javascript/javascript.js';
 
-import { UnControlled as CodeMirror } from "react-codemirror2";
+import { UnControlled as CodeMirror } from 'react-codemirror2';
 
 export default class LiveCodeEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
       htmlCode: `<center>
-  <img src="https://cutt.ly/JbMvJKT" />
-  <h1>Hello World!</h1>
-</center>`,
+        <img src="https://cutt.ly/JbMvJKT" />
+        <h1>Hello World!</h1>
+       </center>`,
       cssCode: `h1 {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-img {
-  width: 200px;
-  height: auto;
-  border-radius: 20px;
-} `,
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+    img {
+    width: 200px;
+    height: auto;
+    border-radius: 20px;
+  } `,
     };
     this.iframeRef = React.createRef();
   }
@@ -33,15 +33,18 @@ img {
 
   render() {
     const options = {
-      mode: "xml",
-      theme: "material",
+      mode: 'xml',
+      theme: 'material',
       lineNumbers: true,
+      lineWrapping: true,
+      lint: true,
     };
     return (
       <div className="live-code-editor">
         <div className="editor-container">
           <div className="editor">
             <CodeMirror
+              autoCursor={false}
               value={this.state.htmlCode}
               options={{ ...options }}
               onChange={(editor, data, value) => {
@@ -53,7 +56,7 @@ img {
           <div className="editor">
             <CodeMirror
               value={this.state.cssCode}
-              options={{ ...options, mode: "css" }}
+              options={{ ...options, mode: 'css' }}
               onChange={(editor, data, value) => {
                 this.setState({ cssCode: value });
               }}
