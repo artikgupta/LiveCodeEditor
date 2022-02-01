@@ -12,9 +12,9 @@ export default class LiveCodeEditor extends Component {
     super(props);
     this.state = {
       htmlCode: `<center>
-        <img src="https://cutt.ly/JbMvJKT" />
-        <h1>Hello World!</h1>
-       </center>`,
+  <img src="https://cutt.ly/JbMvJKT" />
+  <h1>Hello World!</h1>
+  </center>`,
       cssCode: `h1 {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
